@@ -9,7 +9,7 @@ import (
 	"math/rand" // FOR RANDOM NUMBER GENERATION
 	"strconv"   // FOR CONVERSION TO STRING
 
-	"github.com/gorilla/mux" // ROUTER FRAMEWORK MUX
+	"github.com/go-chi/chi" // ROUTER FRAMEWORK CHI
 )
 
 // BOOK STRUCT (MODEL)
@@ -38,7 +38,7 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 // GET ONE BOOK - FUNCTION
 func getOneBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r) // GET PARAMS
+	params := chi.Vars(r) // GET PARAMS
 	// LOOP THROUGH BOOKS AND FIND WITH ID
 	for _, item := range books {
 		if item.ID == params["id"] {
@@ -63,7 +63,7 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 // UPDATE A BOOK - FUNCTION
 func updateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r) // GET PARAMS
+	params := chi.Vars(r) // GET PARAMS
 	// LOOP THROUGH BOOKS AND FIND WITH ID
 	for index, item := range books {
 		if item.ID == params["id"] {
@@ -84,7 +84,7 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 // DELETE A BOOK - FUNCTION
 func deleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	params := mux.Vars(r) // GET PARAMS
+	params := chi.Vars(r) // GET PARAMS
 	// LOOP THROUGH BOOKS AND FIND WITH ID
 	for index, item := range books {
 		if item.ID == params["id"] {
@@ -98,7 +98,7 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// INIT ROUTER
-	router := mux.NewRouter()
+	router := chi.NewRouter()
 
 	// MOCK DATA - @todo - implement DB
 	books = append(books, Book{ID: "1", Isbn: "562365", Title: "Book One", Author: &Author{FirstName: "John", LastName: "Doe"}})
